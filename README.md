@@ -4,7 +4,7 @@
 
 Workshop materials from the Harvard Center for Geographic Analysis (CGA). Across four Google Colab notebooks, you'll use out-of-hospital cardiac arrest (OHCA) events in Georgia to practice spatial autocorrelation, spatial heterogeneity (GWR), spatial clustering, and spatial accessibility (2SFCA) analysis in Python.
 
-**Web version of these instructions:** ([index.html](https://harvard-cga.github.io/Using-Python-for-Geospatial-Analysis-and-Visualization/))
+**Web version of these instructions:** ([Workshop Instructions](https://harvard-cga.github.io/Using-Python-for-Geospatial-Analysis-and-Visualization/))
 
 ## Workshop details
 
