@@ -13,7 +13,7 @@ Workshop materials from the Harvard Center for Geographic Analysis (CGA). Across
 | **Lead Instructor** | Devika Jain |
 | **Time** | 01:00 PM–04:00 PM, November 20, 2026 |
 | **Location** | 1737 Cambridge St., Cambridge, MA, CGIS Knafel Building, Room SB-12, Sub-Basement |
-| **Zoom** | [https://harvard.zoom.us/j/3966419124](https://harvard.zoom.us/j/3966419124) |
+| **Zoom** | To be provided by email |
 
 ## Repository structure
 
