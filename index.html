@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geospatial Python Workshop</title>
+<meta name="description" content="Pre-workshop and in-workshop instructions for Using Python for Geospatial Analysis and Visualization (Harvard CGA).">
+<style>
+:root {
+  --bg:#f7f6f3; --surface:#ffffff; --ink:#1d1f23; --muted:#5d6370; --line:#e3e1dc;
+  --accent:#a51c30; --accent-soft:#f6e7e9; --code:#f0eee9;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#15171a; --surface:#1e2125; --ink:#e9e7e3; --muted:#a2a7b0; --line:#30343a;
+    --accent:#e2697b; --accent-soft:#3a2328; --code:#2a2e33;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#15171a; --surface:#1e2125; --ink:#e9e7e3; --muted:#a2a7b0; --line:#30343a;
+  --accent:#e2697b; --accent-soft:#3a2328; --code:#2a2e33;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+a { color:var(--accent); }
+code { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.88em;
+  background:var(--code); padding:.1em .35em; border-radius:4px; overflow-wrap:anywhere; }
+kbd { font-family:inherit; font-size:.85em; border:1px solid var(--line); border-bottom-width:2px;
+  border-radius:4px; padding:0 .4em; background:var(--surface); }
+header.hero { background:var(--surface); border-bottom:1px solid var(--line); }
+.wrap { max-width:1080px; margin:0 auto; padding:0 16px; }
+.hero .wrap { padding-top:32px; padding-bottom:32px; }
+.logo { display:inline-block; background:#fff; padding:8px 12px; border-radius:8px; }
+.logo img { height:52px; display:block; }
+h1 { font-size:clamp(1.7rem, 4vw, 2.5rem); line-height:1.15; margin:20px 0 8px; letter-spacing:-.01em; }
+.lede { color:var(--muted); max-width:62ch; margin:0 0 24px; }
+dl.meta { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin:0; }
+dl.meta div { border:1px solid var(--line); border-radius:10px; padding:10px 14px; background:var(--bg); }
+dt { font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+dd { margin:2px 0 0; font-weight:500; overflow-wrap:anywhere; }
+.layout { display:grid; grid-template-columns:220px 1fr; gap:40px; padding-top:32px; padding-bottom:64px; }
+nav.toc { position:sticky; top:20px; align-self:start; font-size:.92rem; }
+nav.toc p { font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 8px; }
+nav.toc ul { list-style:none; margin:0; padding:0; }
+nav.toc ul ul { padding-left:12px; }
+nav.toc a { display:block; padding:4px 0; color:var(--ink); text-decoration:none; }
+nav.toc a:hover { color:var(--accent); }
+main { min-width:0; }
+h2 { font-size:1.5rem; margin:0 0 6px; scroll-margin-top:20px; }
+section + section { margin-top:56px; }
+.intro { color:var(--muted); margin:0 0 20px; }
+ol.steps { list-style:none; padding:0; margin:0; }
+.step { display:flex; gap:16px; padding:20px 0; border-top:1px solid var(--line); }
+.step:first-child { border-top:0; }
+.num { flex:0 0 32px; height:32px; border-radius:50%; background:var(--accent); color:#fff;
+  display:grid; place-items:center; font-weight:600; font-size:.9rem; }
+.body { min-width:0; flex:1; }
+.body p { margin:4px 0 0; overflow-wrap:anywhere; }
+figure { margin:14px 0 0; }
+figure img { max-width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:8px;
+  box-shadow:0 1px 3px rgba(0,0,0,.06); }
+table { width:100%; border-collapse:collapse; margin:0 0 24px; font-size:.95rem; }
+th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); }
+th { font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+td a { text-decoration:none; }
+.nb { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:22px; margin-bottom:20px; scroll-margin-top:20px; }
+.nb-head { display:flex; gap:14px; align-items:flex-start; }
+.badge { flex:0 0 36px; height:36px; border-radius:8px; background:var(--accent-soft); color:var(--accent);
+  display:grid; place-items:center; font-weight:700; }
+.nb h3 { margin:0; font-size:1.2rem; }
+.file { text-decoration:none; font-size:.9rem; }
+.purpose { margin:14px 0; }
+.tools { display:flex; gap:8px; margin-bottom:8px; }
+.tools button { font:inherit; font-size:.8rem; color:var(--muted); background:none; border:1px solid var(--line);
+  border-radius:6px; padding:3px 10px; cursor:pointer; }
+.tools button:hover { color:var(--accent); border-color:var(--accent); }
+details { border-top:1px solid var(--line); }
+summary { cursor:pointer; padding:10px 0; font-weight:600; list-style:none; display:flex; gap:10px; align-items:center; }
+summary::-webkit-details-marker { display:none; }
+summary::after { content:"+"; margin-left:auto; color:var(--muted); font-weight:400; font-size:1.2rem; }
+details[open] summary::after { content:"–"; }
+.ltr { font-size:.8rem; width:22px; height:22px; border-radius:5px; border:1px solid var(--line);
+  display:grid; place-items:center; color:var(--muted); flex:0 0 auto; }
+details ol { margin:0 0 14px; padding-left:56px; }
+details li { margin:3px 0; }
+footer { border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; padding:20px 0 40px; }
+@media (max-width: 800px) {
+  .layout { grid-template-columns:1fr; gap:24px; }
+  nav.toc { position:static; border:1px solid var(--line); border-radius:10px; padding:12px 14px; background:var(--surface); }
+  .nb { padding:16px; }
+  details ol { padding-left:40px; }
+  .step { gap:12px; }
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <span class="logo"><img src="images/image1.png" alt="Center for Geographic Analysis, Harvard University"></span>
+  <h1>Using Python for Geospatial Analysis and Visualization</h1>
+  <p class="lede">A hands-on workshop that uses out-of-hospital cardiac arrest (OHCA) events in Georgia to practice spatial autocorrelation, GWR, point clustering, and accessibility analysis in Google Colab.</p>
+  <dl class="meta"><div><dt>Lead Instructor</dt><dd>Devika Jain</dd></div><div><dt>Teaching Assistant</dt><dd>Jaiany Rocha</dd></div><div><dt>Time</dt><dd>01:00 PM–04:00 PM, November 20, 2026</dd></div><div><dt>Location</dt><dd>1737 Cambridge St., Cambridge, MA, CGIS Knafel Building, Room SB-12, Sub-Basement</dd></div><div><dt>Zoom</dt><dd><a href="https://harvard.zoom.us/j/92058503195?pwd=lK3lJ1r63GfAlTbcan7ZDVDajKvUJc.1">https://harvard.zoom.us/j/92058503195</a></dd></div></dl>
+</div></header>
+
+<div class="wrap layout">
+  <nav class="toc" aria-label="Contents">
+    <p>Contents</p>
+    <ul>
+      <li><a href="#pre">Pre-workshop instructions</a></li>
+      <li><a href="#in">In-workshop instructions</a><ul><li><a href="#nb1">1. Spatial Autocorrelation</a></li><li><a href="#nb2">2. Spatial Heterogeneity</a></li><li><a href="#nb3">3. Spatial Clustering</a></li><li><a href="#nb4">4. Spatial Accessibility</a></li></ul></li>
+    </ul>
+  </nav>
+  <main>
+    <section id="pre">
+      <h2>Pre-workshop instructions</h2>
+      <p class="intro">You'll need a laptop for this workshop. Please complete these steps before it begins.</p>
+      <ol class="steps">
+<li class="step"><span class="num">1</span><div class="body"><p>Download the GitHub repository for this workshop to your local computer. (1) Go to: <a href="https://github.com/harvard-cga/Using-Python-for-Geospatial-Analysis-and-Visualization">https://github.com/harvard-cga/Using-Python-for-Geospatial-Analysis-and-Visualization</a> (2) Click <strong>Download ZIP</strong> as shown below. If you do not have a GitHub account, download from <a href="https://drive.google.com/drive/folders/1TSVZkt-byvCoKZRsf82C5BepTWTlyStC?usp=sharing">this Google Drive folder</a>.</p><figure><img src="images/image2.png" alt="GitHub repository page with the Download ZIP option" loading="lazy"></figure></div></li>
+<li class="step"><span class="num">2</span><div class="body"><p>Log in to Google Colab using your Gmail account: <a href="https://colab.research.google.com/">https://colab.research.google.com/</a></p></div></li>
+<li class="step"><span class="num">3</span><div class="body"><p>Mount your Google Drive in Google Colab.</p><figure><img src="images/image3.png" alt="Mounting Google Drive in Google Colab" loading="lazy"></figure></div></li>
+<li class="step"><span class="num">4</span><div class="body"><p>Open your Google Drive and upload the workshop folder (downloaded in step 1) to: <code>My Drive / Colab Notebooks</code></p><figure><img src="images/image4.png" alt="Uploading the workshop folder to My Drive / Colab Notebooks" loading="lazy"></figure></div></li>
+<li class="step"><span class="num">5</span><div class="body"><p>Open the notebook file (<code>.ipynb</code>) using Google Colaboratory.</p><figure><img src="images/image5.png" alt="Opening a notebook with Google Colaboratory" loading="lazy"></figure></div></li>
+<li class="step"><span class="num">6</span><div class="body"><p>Randomly select one notebook and make sure you can run it successfully. Use <kbd>Shift</kbd> + <kbd>Enter</kbd> on Windows or <kbd>Shift</kbd> + <kbd>Return</kbd> on macOS to run each cell. If you are unable to complete this step successfully, no worries — we can work through it together during the workshop.</p><figure><img src="images/image6.png" alt="Running a notebook cell in Google Colab" loading="lazy"></figure></div></li>
+      </ol>
+    </section>
+    <section id="in">
+      <h2>In-workshop instructions</h2>
+      <p class="intro">We'll work through four notebooks in order. Click a section to see its steps.</p>
+      <table><thead><tr><th>#</th><th>Topic</th><th>Notebook</th></tr></thead><tbody>
+      <tr><td>1</td><td><a href="#nb1">Spatial Autocorrelation</a></td><td><code>ohca_zcta_spatial_autocorrelation_colab.ipynb</code></td></tr><tr><td>2</td><td><a href="#nb2">Spatial Heterogeneity</a></td><td><code>ohca_county_gwr_svi_analysis_colab.ipynb</code></td></tr><tr><td>3</td><td><a href="#nb3">Spatial Clustering</a></td><td><code>ohca_county_clustering_analysis_colab.ipynb</code></td></tr><tr><td>4</td><td><a href="#nb4">Spatial Accessibility</a></td><td><code>ohca_aed_accessibility_analysis_colab.ipynb</code></td></tr>
+      </tbody></table>
+<article class="nb" id="nb1">
+  <div class="nb-head"><span class="badge">1</span><div><h3>Spatial Autocorrelation</h3>
+  <a class="file" href="notebooks/ohca_zcta_spatial_autocorrelation_colab.ipynb"><code>ohca_zcta_spatial_autocorrelation_colab.ipynb</code></a></div></div>
+  <p class="purpose"><strong>Purpose:</strong> This notebook tests whether OHCA event counts are spatially clustered across Georgia counties. The filename says zcta, but the workflow uses counties.</p>
+  <div class="tools"><button type="button" data-act="open">Expand all</button><button type="button" data-act="close">Collapse all</button></div>
+  <details><summary><span class="ltr">A</span>Setup and Libraries</summary><ol><li>Installs geospatial and spatial statistics packages.</li><li>Imports geopandas, pandas, matplotlib, libpysal, and esda.</li><li>Imports tools for spatial weights, Moran's I, and Local Moran's I.</li></ol></details><details><summary><span class="ltr">B</span>Load OHCA Points</summary><ol><li>Reads OHCA records from the CSV.</li><li>Converts latitude and longitude columns to numeric.</li><li>Drops rows with missing coordinates.</li><li>Creates point geometries.</li><li>Stores OHCA events as a GeoDataFrame in WGS84.</li></ol></details><details><summary><span class="ltr">C</span>Initial Point Map</summary><ol><li>Plots all OHCA points.</li><li>Uses the map to check whether the coordinates appear reasonable.</li></ol></details><details><summary><span class="ltr">D</span>Load Georgia Counties</summary><ol><li>Reads the county shapefile.</li><li>Reprojects counties to WGS84.</li><li>Filters to Georgia counties.</li><li>Keeps county ID, county name, and geometry.</li><li>Maps county boundaries with OHCA points for alignment checking.</li></ol></details><details><summary><span class="ltr">E</span>Spatial Join</summary><ol><li>Joins each OHCA point to the county polygon that contains it.</li><li>Counts how many OHCA points matched a county.</li><li>Counts how many points did not match.</li><li>Previews joined event records with county information.</li></ol></details><details><summary><span class="ltr">F</span>Count OHCA Events Per County</summary><ol><li>Groups joined OHCA points by county.</li><li>Counts the number of events in each county.</li><li>Merges those counts back onto county polygons.</li><li>Creates <code>ohca_event_count</code>.</li><li>Displays counties with the largest counts.</li></ol></details><details><summary><span class="ltr">G</span>Map Event Counts</summary><ol><li>Creates a county choropleth map.</li><li>Colors counties by OHCA event count.</li><li>Uses quantile classification for map classes.</li><li>Helps to visually inspect high-count and low-count counties.</li></ol></details><details><summary><span class="ltr">H</span>Create Spatial Weights</summary><ol><li>Builds Queen contiguity weights so neighboring counties are connected.</li><li>Checks whether any counties have no neighbors.</li><li>Uses K-nearest neighbors as a backup if needed.</li><li>Row-standardizes the weights.</li></ol></details><details><summary><span class="ltr">I</span>Global Moran&#x27;s I</summary><ol><li>Uses county OHCA counts as the analysis variable.</li><li>Runs Global Moran's I.</li><li>Reports the Moran's I statistic.</li><li>Reports a p-value.</li><li>Tests whether high or low OHCA counts are spatially clustered overall.</li></ol></details><details><summary><span class="ltr">J</span>Local Moran&#x27;s I / LISA</summary><ol><li>Runs Local Moran's I for each county.</li><li>Stores local statistic values and p-values.</li><li>Calculates spatial lag values.</li><li>Classifies counties into cluster types such as high-high, low-low, high-low, low-high, or not significant.</li><li>Counts how many counties fall into each category.</li></ol></details><details><summary><span class="ltr">K</span>LISA Map and Exports</summary><ol><li>Maps significant local cluster categories.</li><li>Saves the LISA cluster map.</li><li>Exports county spatial autocorrelation results as CSV.</li><li>Exports mapped results as GeoJSON.</li></ol></details>
+</article>
+<article class="nb" id="nb2">
+  <div class="nb-head"><span class="badge">2</span><div><h3>Spatial Heterogeneity</h3>
+  <a class="file" href="notebooks/ohca_county_gwr_svi_analysis_colab.ipynb"><code>ohca_county_gwr_svi_analysis_colab.ipynb</code></a></div></div>
+  <p class="purpose"><strong>Purpose:</strong> This notebook focuses on how to model the relationship between county OHCA counts and social vulnerability variables, allowing that relationship to vary spatially using GWR.</p>
+  <div class="tools"><button type="button" data-act="open">Expand all</button><button type="button" data-act="close">Collapse all</button></div>
+  <details><summary><span class="ltr">A</span>Setup and Inputs</summary><ol><li>Installs geopandas, mgwr, matplotlib, and mapclassify.</li><li>Imports geospatial, data, and modeling libraries.</li><li>Defines paths to OHCA data, county boundaries, and the Georgia SVI table.</li></ol></details><details><summary><span class="ltr">B</span>Create County OHCA Counts</summary><ol><li>Loads OHCA event records.</li><li>Cleans latitude and longitude.</li><li>Converts events into point geometries.</li><li>Loads Georgia county polygons.</li><li>Spatially joins OHCA points to counties.</li><li>Counts OHCA cases per county.</li><li>Fills counties with no matched events as zero cases.</li></ol></details><details><summary><span class="ltr">C</span>Load and Prepare SVI Variables</summary><ol><li>Reads the SVI county CSV.</li><li>Creates a five-digit county GEOID.</li><li>Selects SVI variables such as age 65+, disability, uninsured, poverty, education, unemployment, no vehicle, and minority status.</li><li>Converts SVI columns to numeric values.</li><li>Checks whether required SVI columns exist.</li></ol></details><details><summary><span class="ltr">D</span>Merge OHCA and SVI Data</summary><ol><li>Merges county OHCA counts with county SVI variables.</li><li>Drops counties missing required predictor data.</li><li>Creates the final county modeling GeoDataFrame.</li></ol></details><details><summary><span class="ltr">E</span>Prepare GWR Inputs</summary><ol><li>Reprojects counties to <code>EPSG:3857</code>.</li><li>Uses county centroids as model coordinates.</li><li>Sets the outcome variable to log1p(ohca_cases).</li><li>Standardizes SVI predictors using z-scores.</li><li>Creates the predictor matrix for GWR.</li></ol></details><details><summary><span class="ltr">F</span>Fit GWR Model</summary><ol><li>Uses bandwidth selection to choose an adaptive neighborhood size.</li><li>Fits a Geographically Weighted Regression model.</li><li>Prints the GWR summary.</li><li>Allows relationships between SVI variables and OHCA counts to vary by county.</li></ol></details><details><summary><span class="ltr">G</span>Save Local Model Results</summary><ol><li>Adds local intercepts to each county.</li><li>Adds local coefficients for each SVI predictor.</li><li>Adds local R² values.</li><li>Adds filtered local t-values.</li><li>Previews selected coefficient columns.</li></ol></details><details><summary><span class="ltr">H</span>Map GWR Results</summary><ol><li>Maps one local SVI coefficient, often <code>EP_POV150</code>.</li><li>Shows where that predictor has stronger or weaker local association with OHCA counts.</li><li>Maps local R² to show where the model fits better or worse.</li><li>Uses quantile choropleth maps for interpretation.</li></ol></details><details><summary><span class="ltr">I</span>Export Outputs</summary><ol><li>Creates an outputs folder.</li><li>Saves county GWR results as CSV.</li><li>Saves county GWR results as GeoJSON.</li><li>Saves the selected coefficient map as PNG.</li><li>Saves the local R² map as PNG.</li></ol></details>
+</article>
+<article class="nb" id="nb3">
+  <div class="nb-head"><span class="badge">3</span><div><h3>Spatial Clustering</h3>
+  <a class="file" href="notebooks/ohca_county_clustering_analysis_colab.ipynb"><code>ohca_county_clustering_analysis_colab.ipynb</code></a></div></div>
+  <p class="purpose"><strong>Purpose:</strong> This notebook focuses on how to find geographic clusters of OHCA events in Georgia using point-based clustering methods.</p>
+  <div class="tools"><button type="button" data-act="open">Expand all</button><button type="button" data-act="close">Collapse all</button></div>
+  <details><summary><span class="ltr">A</span>Setup and Data Paths</summary><ol><li>Installs geospatial, plotting, and clustering packages.</li><li>Mounts Google Drive for Colab use.</li><li>Imports pandas, geopandas, numpy, matplotlib, DBSCAN, and KMeans.</li><li>Sets a local data folder and a Colab data folder.</li><li>Chooses whichever data folder exists.</li><li>Defines paths to the OHCA CSV and county shapefile.</li></ol></details><details><summary><span class="ltr">B</span>Load OHCA Event Points</summary><ol><li>Reads the OHCA CSV into a DataFrame.</li><li>Identifies latitude and longitude columns.</li><li>Converts coordinate columns to numeric values.</li><li>Drops records missing latitude or longitude.</li><li>Converts rows into point geometries.</li><li>Creates an OHCA GeoDataFrame in WGS84 coordinates.</li></ol></details><details><summary><span class="ltr">C</span>Keep Georgia Events</summary><ol><li>Loads the county shapefile.</li><li>Reprojects counties to WGS84.</li><li>Filters counties to Georgia using STATEFP = '13'.</li><li>Spatially joins OHCA points to Georgia county polygons.</li><li>Keeps only OHCA points that fall inside Georgia counties.</li></ol></details><details><summary><span class="ltr">D</span>Visual Check</summary><ol><li>Plots Georgia county boundaries.</li><li>Plots OHCA points on top.</li><li>Uses this map to confirm that the point and county layers align correctly.</li></ol></details><details><summary><span class="ltr">E</span>Prepare for Clustering</summary><ol><li>Reprojects OHCA points to <code>EPSG:3857</code> so distances are measured in meters.</li><li>Extracts x and y coordinates.</li><li>Builds a coordinate matrix for clustering models.</li></ol></details><details><summary><span class="ltr">F</span>DBSCAN Clustering</summary><ol><li>Runs DBSCAN with a 5 km search radius.</li><li>Requires at least 10 nearby points to form a cluster.</li><li>Assigns a cluster label to each OHCA point.</li><li>Uses -1 to mark noise points that do not belong to a dense cluster.</li><li>Prints counts for each cluster label.</li><li>Counts the number of non-noise clusters.</li></ol></details><details><summary><span class="ltr">G</span>DBSCAN Mapping and Summary</summary><ol><li>Maps DBSCAN clusters.</li><li>Labels noise points separately.</li><li>Summarizes cluster membership by county.</li><li>Helps to identify which counties contribute to each hotspot.</li></ol></details><details><summary><span class="ltr">H</span>KMeans Comparison</summary><ol><li>Runs KMeans with 6 clusters.</li><li>Assigns every OHCA point to one of the 6 groups.</li><li>Maps KMeans clusters.</li><li>Compares DBSCAN with KMeans.</li></ol></details><details><summary><span class="ltr">I</span>Export Outputs</summary><ol><li>Creates an output folder.</li><li>Saves clustered OHCA points as GeoJSON.</li><li>Saves county-cluster summaries as CSV.</li><li>Saves the DBSCAN cluster map as a PNG.</li></ol></details>
+</article>
+<article class="nb" id="nb4">
+  <div class="nb-head"><span class="badge">4</span><div><h3>Spatial Accessibility</h3>
+  <a class="file" href="notebooks/ohca_aed_accessibility_analysis_colab.ipynb"><code>ohca_aed_accessibility_analysis_colab.ipynb</code></a></div></div>
+  <p class="purpose"><strong>Purpose:</strong> This notebook focuses on how to measure AED accessibility for OHCA events using simulated AED locations and the Two-Step Floating Catchment Area method.</p>
+  <div class="tools"><button type="button" data-act="open">Expand all</button><button type="button" data-act="close">Collapse all</button></div>
+  <details><summary><span class="ltr">A</span>Setup and Data Paths</summary><ol><li>Installs geospatial and plotting packages.</li><li>Imports numpy, pandas, geopandas, matplotlib, and Point.</li><li>Sets local and Colab data directories.</li><li>Defines paths to the OHCA CSV and county shapefile.</li></ol></details><details><summary><span class="ltr">B</span>Load OHCA Events</summary><ol><li>Reads OHCA records from the CSV.</li><li>Cleans latitude and longitude columns.</li><li>Drops records without valid coordinates.</li><li>Converts each event into a point geometry.</li><li>Creates an OHCA GeoDataFrame.</li></ol></details><details><summary><span class="ltr">C</span>Keep Georgia Events</summary><ol><li>Loads county polygons.</li><li>Filters to Georgia counties.</li><li>Spatially joins OHCA events to counties.</li><li>Keeps only OHCA events inside Georgia.</li></ol></details><details><summary><span class="ltr">D</span>Simulate AED Locations</summary><ol><li>Dissolves Georgia counties into one state boundary.</li><li>Gets the bounding box around Georgia.</li><li>Randomly generates candidate points.</li><li>Keeps only random points that fall inside Georgia.</li><li>Stops after creating 200 simulated AED points.</li><li>Stores those AEDs in a GeoDataFrame.</li></ol></details><details><summary><span class="ltr">E</span>Map OHCA and AED Locations</summary><ol><li>Plots Georgia county boundaries.</li><li>Plots OHCA events as red points.</li><li>Plots simulated AEDs as blue triangle markers.</li><li>Uses the map as a visual check before analysis.</li></ol></details><details><summary><span class="ltr">F</span>Prepare Distances for 2SFCA</summary><ol><li>Reprojects OHCA points and AED points to <code>EPSG:3857</code>.</li><li>Extracts x and y coordinates for both layers.</li><li>Calculates the distance from every OHCA point to every AED.</li><li>Creates a distance matrix where rows are OHCA events and columns are AEDs.</li><li>Sets the catchment threshold to 5 miles.</li><li>Converts 5 miles to meters.</li></ol></details><details><summary><span class="ltr">G</span>2SFCA Step 1: AED Supply Ratios</summary><ol><li>Creates a true/false matrix showing whether each OHCA event is within each AED catchment.</li><li>Counts how many OHCA events are within each AED's catchment.</li><li>Assigns each AED a supply value of 1.</li><li>Divides AED supply by nearby OHCA demand.</li><li>Produces <code>Rj</code>, the supply-to-demand ratio for each AED.</li></ol></details><details><summary><span class="ltr">H</span>2SFCA Step 2: Event Accessibility Scores</summary><ol><li>For each OHCA event, identifies AEDs within its catchment.</li><li>Adds up the <code>Rj</code> values of those nearby AEDs.</li><li>Stores this value as the event's <code>Ai_2sfca</code> accessibility score.</li><li>Counts how many AEDs are within each event's catchment.</li><li>Creates a flag for whether each event has at least one AED nearby.</li></ol></details><details><summary><span class="ltr">I</span>Summaries and Maps</summary><ol><li>Summarizes event-level accessibility values.</li><li>Groups events by county.</li><li>Calculates county event counts.</li><li>Calculates county mean and median accessibility.</li><li>Calculates the percentage of events with an AED in catchment.</li><li>Maps county mean 2SFCA accessibility.</li></ol></details><details><summary><span class="ltr">J</span>Export Outputs</summary><ol><li>Saves simulated AED points as GeoJSON.</li><li>Saves event-level accessibility results as CSV.</li><li>Saves county-level accessibility summaries as CSV.</li><li>Saves the county accessibility map as PNG.</li></ol></details>
+</article>
+    </section>
+  </main>
+</div>
+<footer><div class="wrap">Harvard Center for Geographic Analysis · <a href="https://github.com/harvard-cga/Using-Python-for-Geospatial-Analysis-and-Visualization">GitHub repository</a></div></footer>
+<script>
+document.querySelectorAll('.nb .tools button').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var open = b.dataset.act === 'open';
+    b.closest('.nb').querySelectorAll('details').forEach(function (d) { d.open = open; });
+  });
+});
+</script>
+</body>
+</html>
